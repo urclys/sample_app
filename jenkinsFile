@@ -1,12 +1,19 @@
 pipeline {
     agent any
-    tools {
-        nodejs 'node'
-    }
 
     stages {
+         stage('Install Node.js') {
+            steps {
+                sh '''
+                    curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+                    sudo apt-get install -y nodejs
+                '''
+            }
+        }
         stage('Build') {
             steps {
+                sh ''
+
                 // Install dependencies and build your application
                 sh 'npm install'
                 sh 'npm run build'
