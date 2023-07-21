@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                // Install dependencies and build your application
+                sh 'npm install'
+                sh 'npm run build'
+            }
+        }
+        stage('Test') {
+            steps {
+                // Run your application's tests
+                sh 'npm run test'
+            }
+        }
+        // Other stages, like deploying your application, would go here
+    }
+}
