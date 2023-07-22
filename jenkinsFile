@@ -18,10 +18,10 @@ pipeline {
          stage('Install Node.js') {
             steps {
                 sh '''
-                   sudo apt-get update -y
-                    sudo apt-get install curl -y
+                    apt-get update -y
+                     apt-get install curl -y
                     curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-                    sudo apt-get install -y nodejs
+                    apt-get install -y nodejs
                 '''
             }
         }
@@ -29,14 +29,14 @@ pipeline {
             steps {
                 sh ''
                 // Install dependencies and build your application
-                sh 'sudo npm install'
-                sh 'sudo npm run build'
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
         stage('Test') {
             steps {
                 // Run your application's tests
-                sh 'sudo npm run test'
+                sh 'npm run test'
             }
         }
         // Other stages, like deploying your application, would go here
