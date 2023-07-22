@@ -6,7 +6,7 @@ pipeline {
     //     }
     // }
     agent any
-    tools{
+    tools {
         nodejs 'node'
     }
     options {
@@ -28,7 +28,7 @@ pipeline {
 
         //         '''
         //     }
-        }
+        // }
         stage('Build') {
             steps {
                 sh ''
