@@ -38,6 +38,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Install dependencies and build your application
+                sh 'ls'
                 sh 'cd sample-app'
                 sh 'npm install'
                 sh 'npm install webpack'
