@@ -31,8 +31,8 @@ pipeline {
         // }
         stage('Clean workspace') {
         steps {
-            sh 'sudo chown -R jenkins:jenkins .'
-            sh 'sudo chmod -R 755 .'
+            sh 'chown -R jenkins:jenkins .'
+            sh 'chmod -R 755 .'
             sh 'rm -rf ./*'
         }
         }
