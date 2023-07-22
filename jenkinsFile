@@ -39,22 +39,11 @@ pipeline {
         stage('Confirmation') {
             steps {
                 script {
-                    def userInput = input(id: 'confirm', message: 'Proceed to the testing stage?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'confirm']])
-
-                    if (userInput == true) {
-                        echo 'User chose to proceed. Proceeding to next stage.'
-                    } else {
-                        error 'User chose not to proceed. Pipeline terminated.'
-                    }
+                    input(id: 'confirm', message: 'Proceed to the testing stage?')
                 }
             }
         }
         stage('Test') {
-            when {
-                expression{
-                    userInput==true
-                }
-            }
             steps {
                 // Run your application's tests
                 sh 'npm run test --passWithNoTests'
