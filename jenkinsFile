@@ -23,11 +23,12 @@ pipeline {
             sh 'chown -R jenkins:jenkins .'
             sh 'chmod -R 755 .'
         }
+        
+        }
         stage('Checkout') {
             steps {
                 git url: 'https://github.com/urclys/sample_app.git', credentialsId: 'aaaaaaaa'
             }
-        }
         }
         stage('Build') {
             steps {
