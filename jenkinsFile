@@ -10,7 +10,7 @@ pipeline {
         nodejs 'node'
     }
     options {
-        // skipDefaultCheckout(true)
+        skipDefaultCheckout(true)
         parallelsAlwaysFailFast()
         disableConcurrentBuilds()
         buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
@@ -22,6 +22,11 @@ pipeline {
         steps {
             sh 'chown -R jenkins:jenkins .'
             sh 'chmod -R 755 .'
+        }
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/urclys/sample_app.git', credentialsId: 'aaaaaaaa'
+            }
         }
         }
         stage('Build') {
