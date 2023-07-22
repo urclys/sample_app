@@ -4,7 +4,7 @@ pipeline {
         nodejs 'node'
     }
     options {
-        // skipDefaultCheckout(true)
+        skipDefaultCheckout(true)
         parallelsAlwaysFailFast()
         disableConcurrentBuilds()
         buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
@@ -16,6 +16,7 @@ pipeline {
         steps {
             sh 'chown -R jenkins:jenkins .'
             sh 'chmod -R 755 .'
+            sh 'git clone https://github.com/urclys/sample_app.git'
         }}
         stage('Build') {
             steps {
