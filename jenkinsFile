@@ -1,11 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'ubuntu:latest'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
-
+    agent none
     stages {
          stage('Install Node.js') {
             steps {
@@ -20,7 +14,6 @@ pipeline {
         stage('Build') {
             steps {
                 sh ''
-
                 // Install dependencies and build your application
                 sh 'npm install'
                 sh 'npm run build'
