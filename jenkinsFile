@@ -10,7 +10,7 @@ pipeline {
         nodejs 'node'
     }
     options {
-        skipDefaultCheckout(true)
+        // skipDefaultCheckout(true)
         parallelsAlwaysFailFast()
         disableConcurrentBuilds()
         buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
@@ -18,17 +18,6 @@ pipeline {
     
     stages {
         
-        //  stage('Install Node.js') {
-        //     steps {
-        //         sh '''
-        //             apt-get update -y
-        //             apt-get install curl -y
-        //             curl -sL https://deb.nodesource.com/setup_14.x | bash -
-        //             apt-get install -y nodejs
-
-        //         '''
-        //     }
-        // }
         stage('Clean workspace') {
         steps {
             sh 'chown -R jenkins:jenkins .'
