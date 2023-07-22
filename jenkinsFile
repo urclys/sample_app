@@ -40,6 +40,7 @@ pipeline {
             steps {
                 sh ''
                 // Install dependencies and build your application
+                sh 'pwd'
                 sh 'npm install'
                 sh 'npm install webpack'
                 sh 'npm run build'
