@@ -39,7 +39,7 @@ pipeline {
         stage('Confirmation') {
             steps {
                 script {
-                    def userInput = input(id: 'confirm', message: 'Proceed to the testing stage?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Proceed?', name: 'yesNo'] ])
+                    def userInput = input(id: 'confirm', message: 'Proceed to the testing stage?')
                     if(!userInput) {
                         error("User chose not to proceed. Exiting...")
                     }
