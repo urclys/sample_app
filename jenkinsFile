@@ -1,51 +1,79 @@
-pipeline {
-    // agent {
-    //     docker {
-    //         image 'ubuntu:latest'
-    //         args '-v /var/run/docker.sock:/var/run/docker.sock'
-    //     }
-    // }
-    agent any
-    tools {
-        nodejs 'node'
-    }
-    options {
-        skipDefaultCheckout(true)
-        parallelsAlwaysFailFast()
-        disableConcurrentBuilds()
-        buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
-    }
+// pipeline {
+//     // agent {
+//     //     docker {
+//     //         image 'ubuntu:latest'
+//     //         args '-v /var/run/docker.sock:/var/run/docker.sock'
+//     //     }
+//     // }
+//     agent any
+//     tools {
+//         nodejs 'node'
+//     }
+//     options {
+//         skipDefaultCheckout(true)
+//         parallelsAlwaysFailFast()
+//         disableConcurrentBuilds()
+//         buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
+//     }
     
+//     stages {
+        
+//         stage('Clean workspace') {
+//         steps {
+//             sh 'chown -R jenkins:jenkins .'
+//             sh 'chmod -R 755 .'
+//         }}
+        
+//         stage('Checkout') {
+//             steps {
+//                 git url: 'https://github.com/urclys/sample_app.git', credentialsId: 'aaaaaaaa'
+//             }
+//         }
+//         stage('Build') {
+//             steps {
+//                 // Install dependencies and build your application
+//                 sh 'ls'
+//                 sh 'cd sample-app'
+//                 sh 'npm install'
+//                 sh 'npm install webpack'
+//                 sh 'npm run build'
+//             }
+//         }
+//         stage('Test') {
+//             steps {
+//                 // Run your application's tests
+//                 sh 'npm run test'
+//             }
+//         }
+//         // Other stages, like deploying your application, would go here
+//     }
+// }
+
+pipeline {
+    agent any
+    tools { 
+        nodejs 'node' 
+    }
     stages {
-        
-        stage('Clean workspace') {
-        steps {
-            sh 'chown -R jenkins:jenkins .'
-            sh 'chmod -R 755 .'
-        }
-        
-        }
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/urclys/sample_app.git', credentialsId: 'aaaaaaaa'
+                checkout scm
             }
         }
         stage('Build') {
             steps {
-                // Install dependencies and build your application
-                sh 'ls'
-                sh 'cd sample-app'
-                sh 'npm install'
-                sh 'npm install webpack'
-                sh 'npm run build'
+                script {
+                    sh 'npm install'
+                    sh 'npm run build'
+                }
             }
         }
-        stage('Test') {
+        stage('Publish') {
             steps {
-                // Run your application's tests
-                sh 'npm run test'
+                script {
+                    sh 'npm publish'
+                }
             }
         }
-        // Other stages, like deploying your application, would go here
     }
 }
