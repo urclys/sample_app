@@ -50,8 +50,10 @@ pipeline {
             }
         }
         stage('Test') {
-            when{
-                userInput==true
+            when {
+                expression{
+                    userInput==true
+                }
             }
             steps {
                 // Run your application's tests
