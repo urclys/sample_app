@@ -18,16 +18,14 @@ pipeline {
             sh 'chmod -R 755 .'
             // sh 'git clone https://github.com/urclys/sample_app.git'
         }}
-        stage('Checkout') {
+          stage('Checkout') {
             steps {
-                checkout([
-                    $class: 'GitSCM', 
-                    branches: [[name: '*/master']],
-                    doGenerateSubmoduleConfigurations: false, 
-                    extensions: [[$class: 'CleanBeforeCheckout']], 
-                    submoduleCfg: [], 
-                    userRemoteConfigs: [[url: 'https://github.com/urclys/sample_app.git']]
-                ])
+                sh """
+                  if [ -d "sample_app" ]; then
+                    rm -rf sample_app
+                  fi
+                  git clone https://github.com/urclys/sample_app.git
+                """
             }
         }
         stage('Build') {
