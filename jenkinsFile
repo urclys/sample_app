@@ -16,7 +16,7 @@ pipeline {
                     submoduleCfg: [], 
                     userRemoteConfigs: [[url: 'https://github.com/urclys/sample_app']]
                 ])
-            }
+            }}
     stages {
          stage('Install Node.js') {
             steps {
