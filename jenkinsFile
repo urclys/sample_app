@@ -55,7 +55,7 @@ pipeline {
         nodejs 'node' 
     }
     options {
-        skipDefaultCheckout(true)
+        // skipDefaultCheckout(true)
         parallelsAlwaysFailFast()
         disableConcurrentBuilds()
         buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
@@ -64,14 +64,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout([
-                    $class: 'GitSCM', 
-                    branches: [[name: '*/main']], 
-                    doGenerateSubmoduleConfigurations: false, 
-                    extensions: [], 
-                    submoduleCfg: [], 
-                    userRemoteConfigs: [[url: 'https://github.com/urclys/sample_app', credentialsId: 'git-creds']]
-                            ])
+                checkout scm
             }
         }
         stage('Build') {
