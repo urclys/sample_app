@@ -1,14 +1,13 @@
 pipeline {
     agent any
-    // tools {
-    //     nodejs 'node'
-    // }
-    // options {
-    //     // skipDefaultCheckout(true)
-    //     parallelsAlwaysFailFast()
-    //     disableConcurrentBuilds()
-    //     buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
-    // }
+    tools {
+        nodejs 'node'
+    }
+    options {
+        parallelsAlwaysFailFast()
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
+    }
     
     stages {
            stage('Checkout') {
@@ -16,12 +15,7 @@ pipeline {
                 checkout scm
             }
         }
-        // stage('Clean workspace') {
-        // steps {
-        //     sh 'chown -R jenkins:jenkins .'
-        //     sh 'chmod -R 755 .'
-        //     // sh 'git clone https://github.com/urclys/sample_app.git'
-        // }}
+        
         //   stage('Checkout') {
         //     steps {
         //         sh """
@@ -32,27 +26,27 @@ pipeline {
         //         """
         //     }
         // }
-        // stage('Build') {
-        //     steps {
-        //         // Install dependencies and build your application
-        //         sh 'npm install'
-        //         sh 'npm install webpack'
-        //         sh 'npm run build'
-        //     }
-        // }
-        // stage('Confirmation') {
-        //     steps {
-        //         script {
-        //             input(id: 'confirm', message: 'Proceed to the testing stage?')
-        //         }
-        //     }
-        // }
-        // stage('Test') {
-        //     steps {
-        //         // Run your application's tests
-        //         sh 'npm run test --passWithNoTests'
-        //     }
-        // }
+        stage('Build') {
+            steps {
+                // Install dependencies and build your application
+                sh 'npm install'
+                sh 'npm install webpack'
+                sh 'npm run build'
+            }
+        }
+        stage('Confirmation') {
+            steps {
+                script {
+                    input(id: 'confirm', message: 'Proceed to the testing stage?')
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                // Run your application's tests
+                sh 'echo hi'
+            }
+        }
         // Other stages, like deploying your application, would go here
     }
 }
