@@ -10,7 +10,7 @@ pipeline {
     }
     
     stages {
-        stage(){
+       
             when {
                 branch 'master'
             }
@@ -40,7 +40,7 @@ pipeline {
         }
         
         // Other stages, like deploying your application, would go here
-    }
+    
 }
 
 // pipeline {
