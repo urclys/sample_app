@@ -9,7 +9,8 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
     
-    
+    stages {
+        stage('Master Branch'){
             when {
                 branch 'master'
             }
@@ -36,7 +37,10 @@ pipeline {
                     }
                 }
             }
-   
+        }
+        
+        // Other stages, like deploying your application, would go here
+    }
 }
 
 // pipeline {
