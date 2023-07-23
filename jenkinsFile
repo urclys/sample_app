@@ -6,49 +6,37 @@ pipeline {
     options {
         parallelsAlwaysFailFast()
         disableConcurrentBuilds()
-        buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
     
-    stages {
-           stage('Checkout') {
-            steps {
-                checkout scm
+    
+            when {
+                branch 'master'
             }
-        }
-        
-        //   stage('Checkout') {
-        //     steps {
-        //         sh """
-        //           if [ -d "sample_app" ]; then
-        //             rm -rf sample_app
-        //           fi
-        //           git clone https://github.com/urclys/sample_app.git
-        //         """
-        //     }
-        // }
-        stage('Build') {
-            steps {
-                // Install dependencies and build your application
-                sh 'npm install'
-                sh 'npm install webpack'
-                sh 'npm run build'
-            }
-        }
-        stage('Confirmation') {
-            steps {
-                script {
-                    input(id: 'confirm', message: 'Proceed to the testing stage?')
+            stages{
+                stage('Build') {
+                steps {
+                    // Install dependencies and build your application
+                    sh 'npm install'
+                    sh 'npm install webpack'
+                    sh 'npm run build'
+                }
+                  }
+                stage('Confirmation') {
+                    steps {
+                        script {
+                            input(id: 'confirm', message: 'Proceed to the testing stage?')
+                        }
+                    }
+                }
+                stage('Test') {
+                    steps {
+                        // Run your application's tests
+                        sh 'echo hi'
+                    }
                 }
             }
-        }
-        stage('Test') {
-            steps {
-                // Run your application's tests
-                sh 'echo hi'
-            }
-        }
-        // Other stages, like deploying your application, would go here
-    }
+   
 }
 
 // pipeline {
