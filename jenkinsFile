@@ -10,7 +10,7 @@ pipeline {
     }
     
     stages {
-        stage('Master Branch'){
+        stage(){
             when {
                 branch 'master'
             }
