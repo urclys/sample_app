@@ -10,38 +10,69 @@ pipeline {
     }
     
     stages {
-       
-            when {
-                branch 'master'
+       stage('Build - Master') {
+            when { branch 'master' }
+            steps {
+                // Steps for master branch
+                 sh 'npm install'
+                sh 'npm install webpack'
+                sh 'npm run build'
             }
-            stages{
-                stage('Build') {
-                steps {
-                    // Install dependencies and build your application
-                    sh 'npm install'
-                    sh 'npm install webpack'
-                    sh 'npm run build'
-                }
-                  }
-                stage('Confirmation') {
+        }
+        stage('Test - Master') {
+            when { branch 'master' }
+            steps {
+                // Steps for master branch
+            }
+        }
+        stage('Confirmation - Master') {
+            when { branch 'master' }
                     steps {
                         script {
-                            input(id: 'confirm', message: 'Proceed to the testing stage?')
+                            input(id: 'confirm', message: 'Proceed to the deployment ?')
                         }
                     }
                 }
-                stage('Test') {
+        stage('Deploy - Master') {
+            when { branch 'master' }
+            steps {
+                // Steps for master branch
+            }
+        }
+        stage('Build - Develop') {
+            when { branch 'develop' }
+            steps {
+                // Steps for develop branch
+                 sh 'npm install'
+                    sh 'npm install webpack'
+                    sh 'npm run build'
+            }
+        }
+        stage('Test - Develop') {
+            when { branch 'develop' }
+            steps {
+                // Steps for develop branch
+            }
+        }
+        stage('Confirmation - Develop') {
+            when { branch 'develop' }
                     steps {
-                        // Run your application's tests
-                        sh 'echo hi'
+                        script {
+                            input(id: 'confirm', message: 'Proceed to the deployment ?')
+                        }
                     }
                 }
+        stage('Deploy - Develop') {
+            when { branch 'develop' }
+            steps {
+                // Steps for develop branch
+            }
+        }
             }
         }
         
         // Other stages, like deploying your application, would go here
-    
-}
+ 
 
 // pipeline {
 //     agent any
