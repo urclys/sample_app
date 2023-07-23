@@ -23,6 +23,8 @@ pipeline {
             when { branch 'master' }
             steps {
                 // Steps for master branch
+                sh 'echo TESTING'
+
             }
         }
         stage('Confirmation - Master') {
@@ -36,6 +38,8 @@ pipeline {
         stage('Deploy - Master') {
             when { branch 'master' }
             steps {
+                sh 'echo DEPLOYMENT'
+
                 // Steps for master branch
             }
         }
@@ -51,6 +55,8 @@ pipeline {
         stage('Test - Develop') {
             when { branch 'develop' }
             steps {
+              sh 'echo TESTING'
+
                 // Steps for develop branch
             }
         }
@@ -65,6 +71,7 @@ pipeline {
         stage('Deploy - Develop') {
             when { branch 'develop' }
             steps {
+                sh 'echo DEPLOYMENT'
                 // Steps for develop branch
             }
         }
