@@ -10,110 +10,44 @@ pipeline {
     }
     
     stages {
-       stage('Build - Master') {
-            when { branch 'master' }
+        stage('Build and Deploy') {
             steps {
-                // Steps for master branch
-                 sh 'npm install'
-                sh 'npm install webpack'
-                sh 'npm run build'
-            }
-        }
-        stage('Test - Master') {
-            when { branch 'master' }
-            steps {
-                // Steps for master branch
-                sh 'echo TESTING'
+                script {
+                    // Define your array of folder names
+                    def folderNames = ['folder1', 'folder2', 'folder3', 'folder4', 'folder5', 'folder6', 'folder7', 'folder8']
 
-            }
-        }
-        stage('Confirmation - Master') {
-            when { branch 'master' }
-                    steps {
-                        script {
-                            input(id: 'confirm', message: 'Proceed to the deployment ?')
+                    // This will hold our dynamic stages
+                    def parallelStages = [:]
+
+                    // Split the folder names into groups of 4
+                    for (int i = 0; i < folderNames.size(); i += 4) {
+                        def batch = folderNames[i..<Math.min(i+4, folderNames.size())]
+
+                        for (int j = 0; j < batch.size(); j++) {
+                            def folderName = batch[j]
+
+                            // Create a stage for each folder and add it to the parallel stages
+                            parallelStages["Process ${folderName}"] = {
+                                stage("Process ${folderName}") {
+                                    steps {
+                                        // Your build and deploy steps here, using the folderName variable
+                                        echo "Processing ${folderName}"
+                                    }
+                                }
+                            }
                         }
+
+                        // Execute the stages in this batch in parallel
+                        parallel parallelStages
+
+                        // Clear the stages for the next batch
+                        parallelStages.clear()
                     }
                 }
-        stage('Deploy - Master') {
-            when { branch 'master' }
-            steps {
-                sh 'echo DEPLOYMENT'
-
-                // Steps for master branch
             }
         }
-        stage('Build - Develop') {
-            when { branch 'develop' }
-            steps {
-                // Steps for develop branch
-                 sh 'npm install'
-                    sh 'npm install webpack'
-                    sh 'npm run build'
-            }
-        }
-        stage('Test - Develop') {
-            when { branch 'develop' }
-            steps {
-              sh 'echo TESTING'
-
-                // Steps for develop branch
-            }
-        }
-        stage('Confirmation - Develop') {
-            when { branch 'develop' }
-                    steps {
-                        script {
-                            input(id: 'confirm', message: 'Proceed to the deployment ?')
-                        }
-                    }
-                }
-        stage('Deploy - Develop') {
-            when { branch 'develop' }
-            steps {
-                sh 'echo DEPLOYMENT'
-                // Steps for develop branch
-            }
-        }
-            }
-        }
+    }
+}
         
-        // Other stages, like deploying your application, would go here
  
 
-// pipeline {
-//     agent any
-//     tools { 
-//         nodejs 'node' 
-//     }
-//     options {
-//         // skipDefaultCheckout(true)
-//         parallelsAlwaysFailFast()
-//         disableConcurrentBuilds()
-//         buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
-//     }
-    
-//     stages {
-//         stage('Checkout') {
-//             steps {
-//                 checkout scm
-//             }
-//         }
-//         stage('Build') {
-//             steps {
-//                 script {
-//                     // sh 'npm install'
-//                     // sh 'npm run build'
-//                     sh 'ls -a'
-//                 }
-//             }
-//         }
-//         // stage('Publish') {
-//         //     steps {
-//         //         script {
-//         //             // sh 'npm publish'
-//         //         }
-//         //     }
-//         // }
-//     }
-// }
