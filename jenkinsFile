@@ -1,14 +1,6 @@
 pipeline {
     agent any
-    tools {
-        nodejs 'node'
-    }
-    options {
-        parallelsAlwaysFailFast()
-        disableConcurrentBuilds()
-        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
-    }
-    
+
     stages {
         stage('Build and Deploy') {
             steps {
@@ -29,10 +21,8 @@ pipeline {
                             // Create a stage for each folder and add it to the parallel stages
                             parallelStages["Process ${folderName}"] = {
                                 stage("Process ${folderName}") {
-                                    steps {
-                                        // Your build and deploy steps here, using the folderName variable
-                                        echo "Processing ${folderName}"
-                                    }
+                                    // Your actions here, using the folderName variable
+                                    echo "Processing ${folderName}"
                                 }
                             }
                         }
@@ -48,6 +38,3 @@ pipeline {
         }
     }
 }
-        
- 
-
