@@ -23,6 +23,7 @@ pipeline {
                                 stage("Process ${folderName}") {
                                     // Your actions here, using the folderName variable
                                     echo "Processing ${folderName}"
+                                    sleep(time: 1, unit: 'MINUTES')
                                 }
                             }
                         }
